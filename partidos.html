@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Partidos | Sporting Cabanillas</title>
+  <meta
+    name="description"
+    content="Consulta los partidos del Sporting Cabanillas y accede a la información oficial de las competiciones."
+  >
+
+  <meta property="og:title" content="Partidos | Sporting Cabanillas">
+  <meta
+    property="og:description"
+    content="Consulta los partidos del Sporting Cabanillas."
+  >
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="partidos.html">
+  <meta property="og:image" content="assets/images/partidos/jornada.jpg">
+
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+</head>
+
+<body data-page="partidos">
+
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+
+  <header class="site-header">
+
+    <div class="brand-line"></div>
+
+    <div class="site-header__main">
+      <div class="container site-header__inner">
+
+        <a
+          class="site-header__brand"
+          href="index.html"
+          aria-label="Sporting Cabanillas - Inicio"
+        >
+          <img
+            class="site-header__crest"
+            src="assets/images/club/escudo.png"
+            alt="Escudo del Sporting Cabanillas"
+            width="64"
+            height="64"
+          >
+
+          <span class="site-header__name">
+            SPORTING CABANILLAS
+          </span>
+        </a>
+
+        <nav
+          class="site-navigation"
+          aria-label="Navegación principal"
+        >
+          <ul class="site-navigation__list">
+
+            <li class="site-navigation__item">
+              <a
+                class="site-navigation__link"
+                href="index.html"
+                data-page="inicio"
+              >
+                Inicio
+              </a>
+            </li>
+
+            <li class="site-navigation__item">
+              <a
+                class="site-navigation__link"
+                href="club.html"
+                data-page="club"
+              >
+                Club
+              </a>
+            </li>
+
+            <li class="site-navigation__item">
+              <a
+                class="site-navigation__link"
+                href="equipos.html"
+                data-page="equipos"
+              >
+                Equipos
+              </a>
+            </li>
+
+            <li class="site-navigation__item">
+              <a
+                class="site-navigation__link"
+                href="partidos.html"
+                data-page="partidos"
+              >
+                Partidos
+              </a>
+            </li>
+
+            <li class="site-navigation__item">
+              <a
+                class="site-navigation__link"
+                href="clasificacion.html"
+                data-page="clasificacion"
+              >
+                Clasificación
+              </a>
+            </li>
+
+            <li class="site-navigation__item">
+              <a
+                class="site-navigation__link"
+                href="patrocinadores.html"
+                data-page="patrocinadores"
+              >
+                Patrocinadores
+              </a>
+            </li>
+
+            <li class="site-navigation__item">
+              <a
+                class="site-navigation__link"
+                href="contacto.html"
+                data-page="contacto"
+              >
+                Contacto
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+
+        <a
+          class="site-header__cta button button--primary"
+          href="patrocinador.html"
+        >
+          Hazte patrocinador
+        </a>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-navigation"
+          aria-label="Abrir menú"
+        >
+          <span class="menu-toggle__line"></span>
+          <span class="menu-toggle__line"></span>
+          <span class="menu-toggle__line"></span>
+        </button>
+
+      </div>
+    </div>
+
+    <nav
+      id="mobile-navigation"
+      class="mobile-navigation"
+      aria-label="Navegación móvil"
+    >
+      <div class="container">
+
+        <a
+          class="mobile-navigation__link"
+          href="index.html"
+          data-page="inicio"
+        >
+          Inicio
+        </a>
+
+        <a
+          class="mobile-navigation__link"
+          href="club.html"
+          data-page="club"
+        >
+          Club
+        </a>
+
+        <a
+          class="mobile-navigation__link"
+          href="equipos.html"
+          data-page="equipos"
+        >
+          Equipos
+        </a>
+
+        <a
+          class="mobile-navigation__link"
+          href="partidos.html"
+          data-page="partidos"
+        >
+          Partidos
+        </a>
+
+        <a
+          class="mobile-navigation__link"
+          href="clasificacion.html"
+          data-page="clasificacion"
+        >
+          Clasificación
+        </a>
+
+        <a
+          class="mobile-navigation__link"
+          href="patrocinadores.html"
+          data-page="patrocinadores"
+        >
+          Patrocinadores
+        </a>
+
+        <a
+          class="mobile-navigation__link"
+          href="contacto.html"
+          data-page="contacto"
+        >
+          Contacto
+        </a>
+
+        <a
+          class="mobile-navigation__cta button button--primary"
+          href="patrocinador.html"
+        >
+          Hazte patrocinador
+        </a>
+
+      </div>
+    </nav>
+
+  </header>
+
+  <main id="main-content">
+
+    <section class="page-hero">
+      <div class="container">
+
+        <div class="page-hero__content">
+
+          <p class="page-hero__eyebrow">
+            Temporada
+          </p>
+
+          <h1 class="page-hero__title">
+            Partidos
+          </h1>
+
+          <p class="page-hero__description">
+            Consulta los partidos de esta jornada y sigue toda la actividad de nuestros equipos.
+          </p>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section matches-page">
+      <div class="container">
+
+        <div class="matches-page__intro">
+
+          <div class="section-heading">
+            <p class="section-heading__eyebrow">
+              Esta jornada
+            </p>
+
+            <h2 class="section-heading__title">
+              Partidos del Sporting Cabanillas
+            </h2>
+          </div>
+
+          <p class="matches-page__text">
+            Consulta aquí los partidos programados para esta jornada.
+            La información semanal se actualiza a través de nuestras
+            publicaciones en redes sociales.
+          </p>
+
+        </div>
+
+        <div class="matches-page__image">
+
+          <figure class="matches-page__poster">
+            <img
+              src="assets/images/partidos/jornada.jpg"
+              alt="Partidos del Sporting Cabanillas de esta jornada"
+              loading="eager"
+            >
+          </figure>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section section--light">
+      <div class="container">
+
+        <div class="matches-official">
+
+          <div class="matches-official__content">
+
+            <p class="section-heading__eyebrow">
+              Información oficial
+            </p>
+
+            <h2 class="section-heading__title">
+              Consulta todos los detalles
+            </h2>
+
+            <p class="matches-official__text">
+              Para consultar calendarios completos, resultados,
+              horarios y otros datos oficiales de las competiciones,
+              puedes acceder directamente a la Federación de Fútbol
+              de Castilla-La Mancha.
+            </p>
+
+          </div>
+
+          <a
+            class="button button--primary"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver información en FFCM
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="sponsor-cta section">
+      <div class="container">
+
+        <div class="sponsor-cta__inner">
+
+          <div class="sponsor-cta__content">
+
+            <p class="sponsor-cta__eyebrow">
+              Sporting Cabanillas
+            </p>
+
+            <h2 class="sponsor-cta__title">
+              Crecemos juntos
+            </h2>
+
+            <p class="sponsor-cta__text">
+              Empresas y marcas pueden formar parte del proyecto
+              del club y acompañarnos durante toda la temporada.
+            </p>
+
+          </div>
+
+          <a
+            class="button button--light"
+            href="patrocinador.html"
+          >
+            Hazte patrocinador
+          </a>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <div class="site-footer__main">
+
+        <div class="site-footer__brand">
+
+          <a
+            class="site-footer__logo"
+            href="index.html"
+            aria-label="Sporting Cabanillas - Inicio"
+          >
+            <img
+              src="assets/images/club/escudo.png"
+              alt="Escudo del Sporting Cabanillas"
+              width="64"
+              height="64"
+            >
+          </a>
+
+          <p class="site-footer__brand-name">
+            SPORTING CABANILLAS
+          </p>
+
+        </div>
+
+        <div class="site-footer__column">
+
+          <h2 class="site-footer__title">
+            Contacto
+          </h2>
+
+          <address class="site-footer__contact">
+
+            <p>
+              Calle Valdemoma, 6D<br>
+              19171 Cabanillas del Campo<br>
+              Guadalajara
+            </p>
+
+            <p>
+              <a href="mailto:spcabanillasfc@gmail.com">
+                spcabanillasfc@gmail.com
+              </a>
+            </p>
+
+            <p>
+              <a href="tel:+34633623990">
+                633 623 990
+              </a>
+            </p>
+
+          </address>
+
+        </div>
+
+        <div class="site-footer__column">
+
+          <h2 class="site-footer__title">
+            Síguenos
+          </h2>
+
+          <nav
+            class="site-footer__socials"
+            aria-label="Redes sociales"
+          >
+
+            <a
+              href="https://www.instagram.com/sportingcabanillas/?hl=es"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+
+            <a
+              href="https://www.facebook.com/p/Sporting-Cabanillas-61550104281861/?locale=es_ES"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+
+            <a
+              href="https://x.com/Sp_Cabanillas"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              X
+            </a>
+
+            <a href="#">
+              YouTube
+            </a>
+
+          </nav>
+
+        </div>
+
+      </div>
+
+      <div class="site-footer__bottom">
+
+        <p>
+          © <span data-current-year></span> Sporting Cabanillas.
+          Todos los derechos reservados.
+        </p>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
