@@ -8,11 +8,12 @@
 // - Menú móvil
 // - Navegación activa
 // - Año automático del footer
-// - Tira rotatoria de patrocinadores en Home
+// - Patrocinadores destacados en Home
 // - Página de patrocinadores
 // - Próximo partido
 // - Último resultado
 // - Equipos en Home
+// - Carruseles de imágenes del Club
 //
 // =========================================================
 
@@ -262,9 +263,9 @@ function initCurrentYear() {
    ========================================================= */
 
 /**
- * Creates the rotating sponsor strip.
+ * Creates the static sponsor strip shown on Home.
  *
- * Only official/main sponsors are displayed.
+ * Only the three current official sponsors are displayed.
  */
 function renderFeaturedSponsors() {
     const containers =
@@ -287,33 +288,46 @@ function renderFeaturedSponsors() {
     }
 
 
+    const featuredSponsorNames = [
+        "JESTHISA",
+        "LOGISTA",
+        "RPM DEALER"
+    ];
+
+
+    const featuredSponsors =
+        mainSponsorsData
+            .filter((sponsor) =>
+                featuredSponsorNames.includes(
+                    sponsor.name
+                )
+            )
+            .sort(
+                (a, b) =>
+                    (a.order || 0) -
+                    (b.order || 0)
+            );
+
+
     containers.forEach((container) => {
-        createSponsorCarousel(
+        createFeaturedSponsors(
             container,
-            mainSponsorsData
+            featuredSponsors
         );
     });
 }
 
 
 /**
- * Creates one sponsor carousel.
+ * Creates the static sponsor strip.
  *
  * @param {HTMLElement} container
  * @param {Array} sponsors
  */
-function createSponsorCarousel(
+function createFeaturedSponsors(
     container,
     sponsors
 ) {
-    const orderedSponsors =
-        [...sponsors].sort(
-            (a, b) =>
-                (a.order || 0) -
-                (b.order || 0)
-        );
-
-
     container.innerHTML = "";
 
 
@@ -331,7 +345,7 @@ function createSponsorCarousel(
         "sponsors-carousel__track";
 
 
-    orderedSponsors.forEach((sponsor) => {
+    sponsors.forEach((sponsor) => {
         const item =
             createSponsorCarouselItem(
                 sponsor
@@ -343,18 +357,6 @@ function createSponsorCarousel(
 
     viewport.appendChild(track);
     container.appendChild(viewport);
-
-
-    if (orderedSponsors.length <= 4) {
-        return;
-    }
-
-
-    startSponsorCarousel(
-        viewport,
-        track,
-        orderedSponsors.length
-    );
 }
 
 
@@ -369,179 +371,6 @@ function createSponsorCarouselItem(sponsor) {
         sponsor,
         "sponsor-carousel__item"
     );
-}
-
-
-/**
- * Starts automatic sponsor rotation.
- *
- * @param {HTMLElement} viewport
- * @param {HTMLElement} track
- * @param {number} sponsorCount
- */
-function startSponsorCarousel(
-    viewport,
-    track,
-    sponsorCount
-) {
-    let currentIndex = 0;
-    let timer = null;
-    let paused = false;
-
-
-    const getItemsPerView = () => {
-        return window.innerWidth <= 700
-            ? 2
-            : 4;
-    };
-
-
-    const getStepPercentage = () => {
-        return 100 / getItemsPerView();
-    };
-
-
-    const updateCarousel = () => {
-        const itemsPerView =
-            getItemsPerView();
-
-        const maxIndex =
-            Math.max(
-                sponsorCount - itemsPerView,
-                0
-            );
-
-
-        if (currentIndex > maxIndex) {
-            currentIndex = 0;
-        }
-
-
-        const offset =
-            currentIndex *
-            getStepPercentage();
-
-
-        track.style.transform =
-            `translateX(-${offset}%)`;
-    };
-
-
-    const next = () => {
-        if (paused) {
-            return;
-        }
-
-
-        const itemsPerView =
-            getItemsPerView();
-
-        const maxIndex =
-            Math.max(
-                sponsorCount - itemsPerView,
-                0
-            );
-
-
-        currentIndex += 1;
-
-
-        if (currentIndex > maxIndex) {
-            currentIndex = 0;
-        }
-
-
-        updateCarousel();
-    };
-
-
-    const start = () => {
-        if (timer) {
-            return;
-        }
-
-
-        timer =
-            window.setInterval(
-                next,
-                3500
-            );
-    };
-
-
-    const stop = () => {
-        if (!timer) {
-            return;
-        }
-
-
-        window.clearInterval(timer);
-        timer = null;
-    };
-
-
-    viewport.addEventListener(
-        "mouseenter",
-        () => {
-            paused = true;
-        }
-    );
-
-
-    viewport.addEventListener(
-        "mouseleave",
-        () => {
-            paused = false;
-        }
-    );
-
-
-    viewport.addEventListener(
-        "focusin",
-        () => {
-            paused = true;
-        }
-    );
-
-
-    viewport.addEventListener(
-        "focusout",
-        () => {
-            paused = false;
-        }
-    );
-
-
-    window.addEventListener(
-        "resize",
-        updateCarousel
-    );
-
-
-    const prefersReducedMotion =
-        window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-        );
-
-
-    if (!prefersReducedMotion.matches) {
-        start();
-    }
-
-
-    prefersReducedMotion.addEventListener(
-        "change",
-        (event) => {
-            if (event.matches) {
-                stop();
-            } else {
-                start();
-            }
-        }
-    );
-
-
-    updateCarousel();
 }
 
 
@@ -1668,6 +1497,7 @@ function createImagePlaceholder(label) {
 
     return placeholder;
 }
+
 
 /* =========================================================
    CLUB CAROUSELS
