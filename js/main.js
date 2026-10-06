@@ -18,7 +18,10 @@
 // =========================================================
 
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+
+    await loadComponents();
+
     initMobileNavigation();
     initCurrentPageNavigation();
     initCurrentYear();
@@ -33,6 +36,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initClubCarousels();
 });
+
+/* =========================================================
+   COMPONENTS
+   ========================================================= */
+
+async function loadComponents() {
+    const components =
+        document.querySelectorAll(
+            "[data-component]"
+        );
+
+    if (!components.length) {
+        return;
+    }
+
+    for (const element of components) {
+
+        const componentName =
+            element.dataset.component;
+
+        if (!componentName) {
+            continue;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    `components/${componentName}.html`
+                );
+
+            if (!response.ok) {
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+            }
+
+            element.innerHTML =
+                await response.text();
+
+        } catch (error) {
+
+            console.error(
+                `Error cargando el componente "${componentName}":`,
+                error
+            );
+        }
+    }
+}
 
 
 /* =========================================================
@@ -159,19 +211,37 @@ function initCurrentPageNavigation() {
     }
 
     const navigationLinks =
-        document.querySelectorAll("[data-page]");
+        document.querySelectorAll(
+            "[data-page]"
+        );
 
 
     navigationLinks.forEach((link) => {
+
         const linkPage =
             link.dataset.page;
 
-        if (linkPage === currentPage) {
-            link.classList.add("is-active");
+        const isCurrent =
+            linkPage === currentPage;
+
+
+        link.classList.toggle(
+            "is-active",
+            isCurrent
+        );
+
+
+        if (isCurrent) {
 
             link.setAttribute(
                 "aria-current",
                 "page"
+            );
+
+        } else {
+
+            link.removeAttribute(
+                "aria-current"
             );
         }
     });
@@ -184,50 +254,113 @@ function initCurrentPageNavigation() {
  * @returns {string|null}
  */
 function getCurrentPage() {
+
     const pathname =
-        window.location.pathname;
-
-    const fileName =
-        pathname.split("/").pop();
+        window.location.pathname
+            .toLowerCase();
 
 
-    switch (fileName) {
-        case "":
-        case "index.html":
-            return "inicio";
+    let fileName =
+        pathname
+            .split("/")
+            .filter(Boolean)
+            .pop() || "";
 
-        case "club.html":
-            return "club";
 
-        case "equipos.html":
-            return "equipos";
-
-        case "partidos.html":
-            return "partidos";
-
-        case "clasificacion.html":
-            return "clasificacion";
-
-        case "patrocinadores.html":
-            return "patrocinadores";
-
-        case "patrocinador.html":
-            return "patrocinador";
-
-        case "contacto.html":
-            return "contacto";
-
-        case "primer-equipo.html":
-        case "filial-promesas.html":
-        case "primer-equipo-fem.html":
-        case "juvenil-nacional.html":
-        case "juvenil-provincial.html":
-        case "escuelas.html":
-            return "equipos";
-
-        default:
-            return null;
+    if (
+        fileName === "" ||
+        fileName === "index" ||
+        fileName === "index.html"
+    ) {
+        return "inicio";
     }
+
+
+    if (
+        fileName === "club" ||
+        fileName === "club.html"
+    ) {
+        return "club";
+    }
+
+
+    if (
+        fileName === "equipos" ||
+        fileName === "equipos.html"
+    ) {
+        return "equipos";
+    }
+
+
+    if (
+        fileName === "partidos" ||
+        fileName === "partidos.html"
+    ) {
+        return "partidos";
+    }
+
+
+    if (
+        fileName === "clasificacion" ||
+        fileName === "clasificacion.html"
+    ) {
+        return "clasificacion";
+    }
+
+
+    if (
+        fileName === "patrocinadores" ||
+        fileName === "patrocinadores.html"
+    ) {
+        return "patrocinadores";
+    }
+
+
+    if (
+        fileName === "patrocinador" ||
+        fileName === "patrocinador.html"
+    ) {
+        return "patrocinador";
+    }
+
+
+    if (
+        fileName === "contacto" ||
+        fileName === "contacto.html"
+    ) {
+        return "contacto";
+    }
+
+
+    const teamPages = [
+        "primer-equipo",
+        "primer-equipo.html",
+
+        "filial-promesas",
+        "filial-promesas.html",
+
+        "primer-equipo-fem",
+        "primer-equipo-fem.html",
+
+        "juvenil-nacional",
+        "juvenil-nacional.html",
+
+        "juvenil-provincial",
+        "juvenil-provincial.html",
+
+        "escuelas",
+        "escuelas.html"
+    ];
+
+
+    if (
+        teamPages.includes(fileName)
+    ) {
+        return "equipos";
+    }
+
+
+    return null;
 }
 
 
