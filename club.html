@@ -13,7 +13,7 @@
 
     <meta
         name="description"
-        content="Conoce el Sporting Cabanillas, su historia y el equipo directivo del club."
+        content="Conoce el Sporting Cabanillas, su historia y el proyecto del club."
     >
 
     <meta
@@ -34,7 +34,7 @@
 
     <meta
         property="og:description"
-        content="Conoce el Sporting Cabanillas, su historia y el equipo directivo del club."
+        content="Conoce el Sporting Cabanillas, su historia y el proyecto del club."
     >
 
     <meta
@@ -80,6 +80,177 @@
         rel="stylesheet"
         href="css/styles.css"
     >
+
+    <style>
+        /* =========================================================
+           CARRUSELES · CLUB
+           ========================================================= */
+
+        .club-carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: var(--color-grey-100);
+        }
+
+        .club-carousel__track {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+        }
+
+        .club-carousel__slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition:
+                opacity 0.5s ease,
+                visibility 0.5s ease;
+        }
+
+        .club-carousel__slide.is-active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .club-carousel__slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .club-carousel__controls {
+            position: absolute;
+            right: 1rem;
+            bottom: 1rem;
+            left: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .club-carousel__arrows {
+            display: flex;
+            gap: 0.5rem;
+            pointer-events: auto;
+        }
+
+        .club-carousel__button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.72);
+            color: #fff;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 1.15rem;
+            line-height: 1;
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .club-carousel__button:hover,
+        .club-carousel__button:focus-visible {
+            background: var(--color-red);
+            border-color: var(--color-red);
+        }
+
+        .club-carousel__button:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+
+        .club-carousel__dots {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.45rem 0.65rem;
+            background: rgba(0, 0, 0, 0.72);
+            pointer-events: auto;
+        }
+
+        .club-carousel__dot {
+            width: 8px;
+            height: 8px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .club-carousel__dot.is-active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
+        .club-carousel__dot:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 3px;
+        }
+
+        .club-carousel__counter {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.35rem 0.55rem;
+            background: rgba(0, 0, 0, 0.72);
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+        }
+
+        .club-page-intro__visual .club-carousel,
+        .club-history__image .club-carousel {
+            height: 100%;
+        }
+
+        .club-page-intro__visual .club-carousel__track,
+        .club-history__image .club-carousel__track {
+            height: 100%;
+            aspect-ratio: auto;
+        }
+
+        @media (max-width: 700px) {
+            .club-carousel__button {
+                width: 38px;
+                height: 38px;
+            }
+
+            .club-carousel__controls {
+                right: 0.75rem;
+                bottom: 0.75rem;
+                left: 0.75rem;
+            }
+
+            .club-carousel__counter {
+                top: 0.75rem;
+                right: 0.75rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .club-carousel__slide {
+                transition: none;
+            }
+        }
+    </style>
 </head>
 
 
@@ -323,14 +494,12 @@
                     </li>
 
                     <li class="mobile-navigation__item mobile-navigation__item--cta">
-
                         <a
                             class="button button--primary"
                             href="patrocinador.html"
                         >
                             Hazte patrocinador
                         </a>
-
                     </li>
 
                 </ul>
@@ -369,8 +538,8 @@
                     </h1>
 
                     <p class="page-hero__text">
-                        Conoce nuestra historia y a las personas
-                        que forman parte del Sporting Cabanillas.
+                        Conoce nuestra historia y el proyecto del
+                        Sporting Cabanillas.
                     </p>
 
                 </div>
@@ -393,11 +562,108 @@
 
                 <div class="club-page-intro__visual">
 
-                    <div class="image-placeholder">
+                    <div
+                        class="club-carousel"
+                        data-carousel
+                        data-carousel-interval="5000"
+                        aria-label="Fotografías del Sporting Cabanillas"
+                    >
 
-                        <span>
-                            FOTO DEL CLUB PENDIENTE
+                        <div class="club-carousel__track">
+
+                            <figure class="club-carousel__slide is-active">
+                                <img
+                                    src="assets/images/club/club-01.jpg"
+                                    alt="Sporting Cabanillas"
+                                    loading="eager"
+                                >
+                            </figure>
+
+                            <figure class="club-carousel__slide">
+                                <img
+                                    src="assets/images/club/club-02.jpg"
+                                    alt="Sporting Cabanillas"
+                                    loading="lazy"
+                                >
+                            </figure>
+
+                            <figure class="club-carousel__slide">
+                                <img
+                                    src="assets/images/club/club-03.jpg"
+                                    alt="Sporting Cabanillas"
+                                    loading="lazy"
+                                >
+                            </figure>
+
+                        </div>
+
+                        <span
+                            class="club-carousel__counter"
+                            aria-hidden="true"
+                        >
+                            01 / 03
                         </span>
+
+                        <div class="club-carousel__controls">
+
+                            <div
+                                class="club-carousel__dots"
+                                role="tablist"
+                                aria-label="Seleccionar fotografía"
+                            >
+
+                                <button
+                                    class="club-carousel__dot is-active"
+                                    type="button"
+                                    role="tab"
+                                    aria-label="Ver fotografía 1"
+                                    aria-selected="true"
+                                    data-carousel-slide="0"
+                                ></button>
+
+                                <button
+                                    class="club-carousel__dot"
+                                    type="button"
+                                    role="tab"
+                                    aria-label="Ver fotografía 2"
+                                    aria-selected="false"
+                                    data-carousel-slide="1"
+                                ></button>
+
+                                <button
+                                    class="club-carousel__dot"
+                                    type="button"
+                                    role="tab"
+                                    aria-label="Ver fotografía 3"
+                                    aria-selected="false"
+                                    data-carousel-slide="2"
+                                ></button>
+
+                            </div>
+
+                            <div class="club-carousel__arrows">
+
+                                <button
+                                    class="club-carousel__button"
+                                    type="button"
+                                    data-carousel-prev
+                                    aria-label="Fotografía anterior"
+                                >
+                                    ←
+                                </button>
+
+                                <button
+                                    class="club-carousel__button"
+                                    type="button"
+                                    data-carousel-next
+                                    aria-label="Fotografía siguiente"
+                                >
+                                    →
+                                </button>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -474,11 +740,108 @@
 
                     <div class="club-history__image">
 
-                        <div class="image-placeholder">
+                        <div
+                            class="club-carousel"
+                            data-carousel
+                            data-carousel-interval="5000"
+                            aria-label="Fotografías históricas del Sporting Cabanillas"
+                        >
 
-                            <span>
-                                FOTO HISTÓRICA PENDIENTE
+                            <div class="club-carousel__track">
+
+                                <figure class="club-carousel__slide is-active">
+                                    <img
+                                        src="assets/images/club/historia-01.jpg"
+                                        alt="Historia del Sporting Cabanillas"
+                                        loading="lazy"
+                                    >
+                                </figure>
+
+                                <figure class="club-carousel__slide">
+                                    <img
+                                        src="assets/images/club/historia-02.jpg"
+                                        alt="Historia del Sporting Cabanillas"
+                                        loading="lazy"
+                                    >
+                                </figure>
+
+                                <figure class="club-carousel__slide">
+                                    <img
+                                        src="assets/images/club/historia-03.jpg"
+                                        alt="Historia del Sporting Cabanillas"
+                                        loading="lazy"
+                                    >
+                                </figure>
+
+                            </div>
+
+                            <span
+                                class="club-carousel__counter"
+                                aria-hidden="true"
+                            >
+                                01 / 03
                             </span>
+
+                            <div class="club-carousel__controls">
+
+                                <div
+                                    class="club-carousel__dots"
+                                    role="tablist"
+                                    aria-label="Seleccionar fotografía histórica"
+                                >
+
+                                    <button
+                                        class="club-carousel__dot is-active"
+                                        type="button"
+                                        role="tab"
+                                        aria-label="Ver fotografía histórica 1"
+                                        aria-selected="true"
+                                        data-carousel-slide="0"
+                                    ></button>
+
+                                    <button
+                                        class="club-carousel__dot"
+                                        type="button"
+                                        role="tab"
+                                        aria-label="Ver fotografía histórica 2"
+                                        aria-selected="false"
+                                        data-carousel-slide="1"
+                                    ></button>
+
+                                    <button
+                                        class="club-carousel__dot"
+                                        type="button"
+                                        role="tab"
+                                        aria-label="Ver fotografía histórica 3"
+                                        aria-selected="false"
+                                        data-carousel-slide="2"
+                                    ></button>
+
+                                </div>
+
+                                <div class="club-carousel__arrows">
+
+                                    <button
+                                        class="club-carousel__button"
+                                        type="button"
+                                        data-carousel-prev
+                                        aria-label="Fotografía histórica anterior"
+                                    >
+                                        ←
+                                    </button>
+
+                                    <button
+                                        class="club-carousel__button"
+                                        type="button"
+                                        data-carousel-next
+                                        aria-label="Fotografía histórica siguiente"
+                                    >
+                                        →
+                                    </button>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
@@ -514,198 +877,7 @@
 
 
         <!-- =================================================
-             EQUIPO DIRECTIVO
-             ================================================= -->
-
-        <section
-            class="section section--large"
-            aria-labelledby="board-title"
-        >
-
-            <div class="container">
-
-                <div class="section-header">
-
-                    <div>
-
-                        <span class="section-header__eyebrow">
-                            Organización
-                        </span>
-
-                        <h2
-                            class="section-header__title"
-                            id="board-title"
-                        >
-                            Equipo<br>
-                            directivo
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="club-board">
-
-                    <div class="club-board__image">
-
-                         <img
-                            src="assets/images/club/equipo-directivo.jpg"
-                            alt="Equipo directivo del Sporting Cabanillas"
-                            loading="lazy"
-                        >
-
-                    </div>
-
-
-                    <div class="club-board__people">
-
-                        <div class="club-board__person">
-
-                            <h3>
-                                RODRIGO JUBERIAS
-                            </h3>
-
-                            <p>
-                                Presidente
-                            </p>
-
-                        </div>
-
-
-                        <div class="club-board__person">
-
-                            <h3>
-                                DANIEL CALVO
-                            </h3>
-
-                            <p>
-                                Secretario
-                            </p>
-
-                        </div>
-
-
-                        <div class="club-board__person">
-
-                            <h3>
-                                JUAN GUILLÉN
-                            </h3>
-
-                            <p>
-                                Tesorero
-                            </p>
-
-                        </div>
-
-
-                        <div class="club-board__person">
-
-                            <h3>
-                               LAURA GUILLÉN
-                            </h3>
-
-                            <p>
-                                Vocal
-                            </p>
-
-                        </div>
-
-
-                        <div class="club-board__person">
-
-                            <h3>
-                                DANIEL IZQUIERDO
-                            </h3>
-
-                            <p>
-                                Vocal
-                            </p>
-
-                        </div>
-
-
-                        <div class="club-board__person">
-
-                            <h3>
-                                DIEGO GARRIDO
-                            </h3>
-
-                            <p>
-                                Vocal
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             EQUIPOS
-             ================================================= -->
-
-        <section
-            class="section section--dark"
-            aria-labelledby="teams-link-title"
-        >
-
-            <div class="container club-project">
-
-                <div class="club-project__content">
-
-                    <span class="section-header__eyebrow">
-                        Estructura deportiva
-                    </span>
-
-                    <h2
-                        class="section-header__title"
-                        id="teams-link-title"
-                    >
-                        Nuestros<br>
-                        equipos
-                    </h2>
-
-                    <p>
-                        Descubre todos los equipos que forman parte
-                        del Sporting Cabanillas y accede a la información
-                        de cada categoría.
-                    </p>
-
-                    <a
-                        class="section-header__link"
-                        href="equipos.html"
-                    >
-                        VER EQUIPOS →
-                    </a>
-
-                </div>
-
-
-                <div class="club-project__visual">
-
-                    <div class="image-placeholder">
-
-                        <span>
-                            FOTO DE EQUIPO PENDIENTE
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SPONSOR CTA
+             SPONSOR / SOCIOS CTA
              ================================================= -->
 
         <section
@@ -734,17 +906,48 @@
 
                 <div class="sponsor-cta__content">
 
-                    <p>
-                        Conoce las posibilidades de colaboración
-                        con el Sporting Cabanillas.
-                    </p>
+                    <div class="club-join-option">
 
-                    <a
-                        class="button button--primary"
-                        href="patrocinador.html"
-                    >
-                        Hazte patrocinador
-                    </a>
+                        <h3>
+                            Hazte socio
+                        </h3>
+
+                        <p>
+                            Forma parte del Sporting Cabanillas
+                            y apoya al club desde dentro.
+                        </p>
+
+                        <a
+                            class="section-header__link"
+                            href="https://sporting.tacticalcore.es/#registro-socio"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            HAZTE SOCIO →
+                        </a>
+
+                    </div>
+
+
+                    <div class="club-join-option">
+
+                        <h3>
+                            Hazte patrocinador
+                        </h3>
+
+                        <p>
+                            Colabora con el Sporting Cabanillas
+                            y forma parte de nuestro proyecto.
+                        </p>
+
+                        <a
+                            class="section-header__link"
+                            href="patrocinador.html"
+                        >
+                            HAZTE PATROCINADOR →
+                        </a>
+
+                    </div>
 
                 </div>
 
@@ -875,7 +1078,6 @@
                             Contacto
                         </h2>
 
-
                         <div class="site-footer__contact">
 
                             <p>
@@ -908,6 +1110,8 @@
                                 <li>
                                     <a
                                         href="https://www.instagram.com/sportingcabanillas/?hl=es"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         aria-label="Instagram del Sporting Cabanillas"
                                     >
                                         Instagram
@@ -917,6 +1121,8 @@
                                 <li>
                                     <a
                                         href="https://www.facebook.com/p/Sporting-Cabanillas-61550104281861/?locale=es_ES"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         aria-label="Facebook del Sporting Cabanillas"
                                     >
                                         Facebook
@@ -926,6 +1132,8 @@
                                 <li>
                                     <a
                                         href="https://x.com/Sp_Cabanillas"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         aria-label="X del Sporting Cabanillas"
                                     >
                                         X
