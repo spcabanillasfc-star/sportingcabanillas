@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLatestResult();
 
     renderHomeTeams();
+
+    initClubCarousels();
 });
 
 
@@ -1665,4 +1667,289 @@ function createImagePlaceholder(label) {
 
 
     return placeholder;
+}
+
+/* =========================================================
+   CLUB CAROUSELS
+   ========================================================= */
+
+function initClubCarousels() {
+    const carousels =
+        document.querySelectorAll("[data-carousel]");
+
+    if (!carousels.length) {
+        return;
+    }
+
+    carousels.forEach((carousel) => {
+        initClubCarousel(carousel);
+    });
+}
+
+
+function initClubCarousel(carousel) {
+    const slides =
+        Array.from(
+            carousel.querySelectorAll(
+                ".club-carousel__slide"
+            )
+        );
+
+    const dots =
+        Array.from(
+            carousel.querySelectorAll(
+                ".club-carousel__dot"
+            )
+        );
+
+    const previousButton =
+        carousel.querySelector(
+            "[data-carousel-prev]"
+        );
+
+    const nextButton =
+        carousel.querySelector(
+            "[data-carousel-next]"
+        );
+
+    const counter =
+        carousel.querySelector(
+            ".club-carousel__counter"
+        );
+
+    if (slides.length <= 1) {
+        return;
+    }
+
+    let currentIndex = 0;
+    let timer = null;
+
+    const interval =
+        Number(
+            carousel.dataset.carouselInterval
+        ) || 5000;
+
+    const prefersReducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        );
+
+
+    const updateCarousel = () => {
+
+        slides.forEach((slide, index) => {
+
+            const active =
+                index === currentIndex;
+
+            slide.classList.toggle(
+                "is-active",
+                active
+            );
+
+            slide.setAttribute(
+                "aria-hidden",
+                String(!active)
+            );
+        });
+
+
+        dots.forEach((dot, index) => {
+
+            const active =
+                index === currentIndex;
+
+            dot.classList.toggle(
+                "is-active",
+                active
+            );
+
+            dot.setAttribute(
+                "aria-selected",
+                String(active)
+            );
+        });
+
+
+        if (counter) {
+
+            const current =
+                String(
+                    currentIndex + 1
+                ).padStart(2, "0");
+
+            const total =
+                String(
+                    slides.length
+                ).padStart(2, "0");
+
+            counter.textContent =
+                `${current} / ${total}`;
+        }
+    };
+
+
+    const goToSlide = (index) => {
+
+        currentIndex =
+            (index + slides.length) %
+            slides.length;
+
+        updateCarousel();
+    };
+
+
+    const nextSlide = () => {
+        goToSlide(
+            currentIndex + 1
+        );
+    };
+
+
+    const previousSlide = () => {
+        goToSlide(
+            currentIndex - 1
+        );
+    };
+
+
+    const stopAutoplay = () => {
+
+        if (!timer) {
+            return;
+        }
+
+        window.clearInterval(timer);
+        timer = null;
+    };
+
+
+    const startAutoplay = () => {
+
+        if (prefersReducedMotion.matches) {
+            return;
+        }
+
+        stopAutoplay();
+
+        timer =
+            window.setInterval(
+                nextSlide,
+                interval
+            );
+    };
+
+
+    if (previousButton) {
+
+        previousButton.addEventListener(
+            "click",
+            () => {
+                previousSlide();
+                startAutoplay();
+            }
+        );
+    }
+
+
+    if (nextButton) {
+
+        nextButton.addEventListener(
+            "click",
+            () => {
+                nextSlide();
+                startAutoplay();
+            }
+        );
+    }
+
+
+    dots.forEach((dot, index) => {
+
+        dot.addEventListener(
+            "click",
+            () => {
+                goToSlide(index);
+                startAutoplay();
+            }
+        );
+    });
+
+
+    carousel.addEventListener(
+        "mouseenter",
+        stopAutoplay
+    );
+
+
+    carousel.addEventListener(
+        "mouseleave",
+        startAutoplay
+    );
+
+
+    carousel.addEventListener(
+        "focusin",
+        stopAutoplay
+    );
+
+
+    carousel.addEventListener(
+        "focusout",
+        (event) => {
+
+            if (
+                !carousel.contains(
+                    event.relatedTarget
+                )
+            ) {
+                startAutoplay();
+            }
+        }
+    );
+
+
+    carousel.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key ===
+                "ArrowLeft"
+            ) {
+                event.preventDefault();
+
+                previousSlide();
+                startAutoplay();
+            }
+
+
+            if (
+                event.key ===
+                "ArrowRight"
+            ) {
+                event.preventDefault();
+
+                nextSlide();
+                startAutoplay();
+            }
+        }
+    );
+
+
+    prefersReducedMotion.addEventListener(
+        "change",
+        (event) => {
+
+            if (event.matches) {
+                stopAutoplay();
+            } else {
+                startAutoplay();
+            }
+        }
+    );
+
+
+    updateCarousel();
+    startAutoplay();
 }
