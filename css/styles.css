@@ -201,6 +201,37 @@ body.menu-open {
     color: var(--color-white);
 }
 
+/*
+ * Skip link:
+ * hidden visually during normal browsing and exposed when
+ * keyboard navigation gives it focus.
+ */
+.skip-link {
+    position: fixed;
+    top: var(--space-3);
+    left: var(--space-3);
+    z-index: 1000;
+    width: auto;
+    max-width: calc(100% - (var(--space-6)));
+    padding: 0.7rem 1rem;
+    border: 2px solid var(--color-red);
+    background: var(--color-black);
+    color: var(--color-white);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    text-decoration: none;
+    transform: translateY(-200%);
+    transition: transform var(--transition-fast);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 3px solid var(--color-white);
+    outline-offset: 2px;
+}
+
 
 /* =========================================================
    04. TYPOGRAPHY
@@ -1189,6 +1220,69 @@ strong {
     color: rgba(255, 255, 255, 0.72);
 }
 
+/*
+ * Club CTA options.
+ * These links reuse .section-header__link in the HTML, but they
+ * live on a dark CTA surface, so they need an explicit light
+ * treatment rather than inheriting the global text colour.
+ */
+.sponsor-cta .club-join-option {
+    padding-block: var(--space-5);
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.sponsor-cta .club-join-option:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.sponsor-cta .club-join-option h3 {
+    margin-bottom: var(--space-2);
+    color: var(--color-white);
+    font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+}
+
+.sponsor-cta .club-join-option p {
+    margin-bottom: var(--space-4);
+    color: rgba(255, 255, 255, 0.72);
+    font-size: var(--text-sm);
+}
+
+.sponsor-cta .club-join-option .section-header__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0.8rem 1.15rem;
+    border: 1px solid var(--color-white);
+    background: transparent;
+    color: var(--color-white);
+    font-size: var(--text-sm);
+    letter-spacing: 0.045em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition:
+        background-color var(--transition-base),
+        border-color var(--transition-base),
+        color var(--transition-base),
+        transform var(--transition-base);
+}
+
+.sponsor-cta .club-join-option .section-header__link:hover {
+    border-color: var(--color-white);
+    background: var(--color-white);
+    color: var(--color-black);
+    transform: translateY(-1px);
+}
+
+.sponsor-cta .club-join-option .section-header__link:focus-visible {
+    outline-color: var(--color-white);
+    outline-offset: 4px;
+}
+
 
 /* =========================================================
    21. PAGE HEROES
@@ -1688,6 +1782,43 @@ strong {
 }
 
 .site-footer__legal a:hover {
+    color: var(--color-white);
+}
+
+/*
+ * Contact page compatibility.
+ * contacto.html currently uses a slightly different set of
+ * footer class names. These rules keep that existing markup
+ * visually aligned with the global footer system.
+ */
+.site-footer__logo {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
+.site-footer__brand-name {
+    max-width: 160px;
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: var(--font-weight-bold);
+    line-height: 0.85;
+    text-transform: uppercase;
+}
+
+.site-footer__socials {
+    margin-top: var(--space-8);
+}
+
+.site-footer__socials a {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: var(--text-sm);
+    transition: color var(--transition-fast);
+}
+
+.site-footer__socials a:hover {
     color: var(--color-white);
 }
 
@@ -2232,6 +2363,18 @@ strong {
         max-width: 500px;
     }
 
+    .sponsor-cta .club-join-option {
+        padding-block: var(--space-5);
+    }
+
+    .sponsor-cta .club-join-option:first-child {
+        padding-top: 0;
+    }
+
+    .sponsor-cta .club-join-option .section-header__link {
+        width: 100%;
+    }
+
     .page-hero__inner {
         min-height: 280px;
         padding-block: var(--space-12);
@@ -2275,6 +2418,15 @@ strong {
 
     .site-footer__legal {
         justify-content: flex-start;
+    }
+
+    .site-footer__logo {
+        width: 64px;
+        height: 64px;
+    }
+
+    .site-footer__brand-name {
+        font-size: 1.55rem;
     }
 }
 
@@ -2325,6 +2477,21 @@ strong {
     .site-footer__brand-column {
         grid-column: auto;
     }
+
+    .site-footer__logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .site-footer__brand-name {
+        font-size: 1.4rem;
+    }
+
+    .sponsor-cta .club-join-option .section-header__link {
+        min-height: 48px;
+        padding-inline: 1rem;
+        font-size: 0.8rem;
+    }
 }
 
 
@@ -2338,7 +2505,7 @@ strong {
         scroll-behavior: auto;
     }
 
-    *,
+    * ,
     *::before,
     *::after {
         animation-duration: 0.01ms !important;
@@ -2721,6 +2888,7 @@ strong {
         transition: none;
     }
 }
+
 
 /* =========================================================
    42. CLASIFICACIÓN
